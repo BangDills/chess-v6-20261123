@@ -90,9 +90,9 @@ def E():
   p=B[q]
   if p:
    t=p&7;f=q&7;r=q>>4
-   v=V[t]+(0,0,6,4,4,4,0)[t]*(min(f,7-f)+min(r,7-r))
+   v=V[t]+(0,0,10,5,3,1,0)[t]*(min(f,7-f)+min(r,7-r))
    s+=v if p<8 else-v
- return s if S[0]else-s
+ return(s if S[0]else-s)+12
 def order(ms):
  def sc(m):
   f,t,p=m;c=B[t]
