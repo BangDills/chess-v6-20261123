@@ -394,6 +394,26 @@ def A(d, a, b, pl):
     ic = atk(ksq, not w)
     if d <= 0:
         return Q(0, a, b, pl)
+    if not ic and d > 2:
+        e0 = S[2]
+        S[0] = 1 - S[0]
+        S[2] = -1
+        S[3] += 1
+        H.append(key())
+        try:
+            v = -A(d - 3, -b, 1 - b, pl + 1)
+        except TO:
+            S[0] = 1 - S[0]
+            S[2] = e0
+            S[3] -= 1
+            H.pop()
+            raise
+        S[0] = 1 - S[0]
+        S[2] = e0
+        S[3] -= 1
+        H.pop()
+        if v >= b:
+            return v
     tm = 0
     e = TT.get(k)
     if e and e[0] >= d:
@@ -415,8 +435,13 @@ def A(d, a, b, pl):
     bs = -MATE - 1
     bm = ms[0]
     a0 = a
-    for m in order(ms, pl, tm):
-        s = C(m, A, d - 1, a, b, pl)
+    for j, m in enumerate(order(ms, pl, tm)):
+        r = d - 1
+        if j > 3 and d > 2 and not ic and B[m[1]] == 0 and m[2] == 0:
+            r = d - 2
+        s = C(m, A, r, a, b, pl)
+        if r < d - 1 and s > a:
+            s = C(m, A, d - 1, a, b, pl)
         if s > bs:
             bs = s
             bm = m
