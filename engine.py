@@ -14,10 +14,11 @@ KE = [0] * 128
 for _r in range(8):
     for _f in range(8):
         _s = _r * 16 + _f
-        _c = (_f if _f < 4 else 7 - _f) + (_r if _r < 4 else 7 - _r)
+        _d = _r if _r < 4 else 7 - _r
+        _c = (_f if _f < 4 else 7 - _f) + _d
         T[1][_s] = (0, 0, 6, 12, 20, 32, 50, 0)[_r] + (4 if _f in (3, 4) and 1 < _r < 6 else 0)
-        T[2][_s] = 8 * _c - 22
-        T[3][_s] = 5 * _c - 9
+        T[2][_s] = 6 * _c - 18 + (12 if _r > 1 and _r < 6 and _f > 0 and _f < 7 else 0)
+        T[3][_s] = 4 * _c - 8 + (12 if _r > 0 and _r < 7 and _f > 0 and _f < 7 else 0)
         T[4][_s] = 18 if _r == 6 else (4 if _r == 1 else 0)
         T[5][_s] = 3 * _c - 8
         T[6][_s] = (22, 26, 12, 0, 0, 12, 26, 22)[_f] - 16 * _r if _r < 2 else -12 * _r - 8
