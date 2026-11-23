@@ -476,6 +476,8 @@ def choose(f, lg, hs):
         L = set(lg)
         ms = [m for m in legal(0) if uci(m) in L]
         ms.sort(key=uci)
+        if len(ms) == 0:
+            return lg[0]
         if len(ms) == 1:
             return uci(ms[0])
         TT.clear()
